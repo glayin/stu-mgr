@@ -1,4 +1,4 @@
-
+require('./Schemas/User')
 const mongoose = require('mongoose')
 
 //哪个数据库
@@ -8,28 +8,39 @@ const mongoose = require('mongoose')
 //Schema映射了MongoDB下的一个集合，并且它的内容就是集合下的文档
 //Modal可以理解成根据Schema生成的一套方法，这套方法用来操作MongoDB下的集合和集合下的文档
 
-const UserSchema = new mongoose.Schema({
-    nickname: String,
-    password: String,
-    age: Number
-})
-
-const UserModal = mongoose.model('User', UserSchema)
+// const UserSchema = new mongoose.Schema({
+//     nickname: String,
+//     password: String,
+//     age: Number
+// })
+//
+// const UserModal = mongoose.model('User', UserSchema)
 
 const  connect = () => {
-    //连接数据库
-    mongoose.connect('mongodb://127.0.0.1:27017/book-mgr')
-    //数据库打开时做一些事情
-    mongoose.connection.on('open', () => {
-        console.log('连接成功')
-        const user = new UserModal({
-            nickname:'小明',
-            password: '123456',
-            age:12
+    return new Promise((resolve) => {
+        //连接数据库
+        mongoose.connect('mongodb://127.0.0.1:27017/book-mgr')
+        //数据库打开时做一些事情
+        mongoose.connection.on('open', () => {
+            console.log('连接数据库成功')
+            resolve()
+
+            // const user = new UserModal({
+            //     nickname:'小明',
+            //     password: '123456',
+            //     age:12
+            // })
+            // user.save()
         })
-        user.save()
-    })
+        })
+
+
+
 
 }
 
-connect()
+
+
+module.exports = {
+    connect,
+}
