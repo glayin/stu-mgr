@@ -1,4 +1,5 @@
 require('./Schemas/User')
+require('./Schemas/InviteCode')
 const mongoose = require('mongoose')
 
 //哪个数据库
