@@ -1,5 +1,5 @@
 import {defineComponent} from 'vue'
-
+import AddOne from './AddOne/index.vue'
 export default defineComponent({
   setup(){
     const columns = [
