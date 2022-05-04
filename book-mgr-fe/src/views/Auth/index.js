@@ -31,10 +31,10 @@ export default defineComponent({
         message.info('请输入密码')
         return;
       }
-      if(regForm.inviteCode === ''){
-        message.info('请输入邀请码')
-        return;
-      }
+      // if(regForm.inviteCode === ''){
+      //   message.info('请输入邀请码')
+      //   return;
+      // }
 
       const res = await auth.register(
         regForm.account,
