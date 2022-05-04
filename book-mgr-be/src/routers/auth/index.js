@@ -1,6 +1,7 @@
 const Router = require('@koa/router')
 const mongoose = require('mongoose')
 const {getBody} = require('../../helpers/utils')
+const {v4 : uuidv4} = require('uuid')
 const jwt = require('jsonwebtoken')
 const router = new Router({
     prefix: '/auth',
@@ -15,7 +16,8 @@ router.post('/register', async (ctx) => {
            password,
            inviteCode} = getBody(ctx)
     //做表单校验
-    if(account === '' ||password === ''||inviteCode ===''){
+    //邀请码删掉了
+    if(account === '' ||password === '' ){
         ctx.body = {
             code : 0,
             msg :'字段不能为空',
@@ -24,17 +26,17 @@ router.post('/register', async (ctx) => {
         return
     }
     //找有没有邀请码
-    const findCode = await InviteCode.findOne({
-        code:inviteCode
-    }).exec()
-    if((!findCode) || findCode.user){
-        ctx.body = {
-            code : 0,
-            msg :'邀请码不正确',
-            data:null,
-        }
-        return
-    }
+    // const findCode = await InviteCode.findOne({
+    //     code:inviteCode
+    // }).exec()
+    // if((!findCode) || findCode.user){
+    //     ctx.body = {
+    //         code : 0,
+    //         msg :'邀请码不正确',
+    //         data:null,
+    //     }
+    //     return
+    // }
     //去找account为传递上来的“account”用户
     const findUser = await User.findOne({
         account,
@@ -49,23 +51,22 @@ router.post('/register', async (ctx) => {
         return
     }
     //创建一个用户
+
     const user = new User({
         account,
         password,
+        readerNo:uuidv4()
     })
     //把创建的用户同步到mongodb
     const res = await user.save()
 
-    findCode.user = res._id
-
-
-
-    findCode.meta.updatedAt = new Date().getTime()
-    await findCode.save()
+    // findCode.user = res._id
+    // findCode.meta.updatedAt = new Date().getTime()
+    // await findCode.save()
     //相应成功
     ctx.body = {
         code : 1,
-        msg: '注册成功',
+        msg: `注册成功,您的读者号${user.readerNo}`,
         data: res,
     }
 })
