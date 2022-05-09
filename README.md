@@ -1,2 +1,2 @@
 # stu-mgr
-management system
+simple students management system
