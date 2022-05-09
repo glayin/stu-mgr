@@ -86,8 +86,12 @@ export default defineComponent({
 
           store.commit('setUserInfo', user)
           store.commit('setUserCharacter',getCharacterInfoById(user.character))
+          if(store.state.userCharacter.title ==="管理员" ){
+            router.replace('/books')
+          }else{
+            router.replace('/borrow')
+          }
 
-          router.replace('/books')
         //  replace跳到下一页不能回退，repush可以
         })
 

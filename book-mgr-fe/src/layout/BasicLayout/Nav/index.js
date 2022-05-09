@@ -12,7 +12,15 @@ export default defineComponent({
     onMounted(() => {
       selectedKeys.value = [route.path]
       if(store.state.userCharacter.name !=='admin'){
-        menu.splice(1,1)
+
+        menu.splice(0,2)
+        menu.push({
+
+          title:'书籍借阅',
+            url:'/borrow',
+
+
+        })
       }
 
     })
