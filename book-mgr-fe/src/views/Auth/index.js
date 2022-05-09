@@ -2,7 +2,11 @@ import{ defineComponent,reactive,ref } from 'vue';
 import {UserOutlined, LockOutlined, MailOutlined} from '@ant-design/icons-vue'
 import {auth} from '@/service';
 import {result} from "@/helpers/utils";
+import {getCharacterInfoById} from "@/helpers/character";
 import {message} from "ant-design-vue";
+import store from '@/store';
+import {useRouter} from 'vue-router'
+import {setToken} from "@/helpers/token";
 
 export default defineComponent({
   components: {
@@ -12,13 +16,16 @@ export default defineComponent({
   },
   setup(){
 
-    ref()
+    const router = useRouter()
 
     const regForm = reactive({
       //注册表单数据
       account : '',
       password: '',
-      inviteCode: ''
+      inviteCode: '',
+      name:'',
+      address:'',
+      company:''
     });
 
     const register = async () => {
@@ -69,9 +76,19 @@ export default defineComponent({
         return;
       }
       const res = await auth.login(loginForm.account, loginForm.password)
+
       result(res)
-        .success((data) => {
-          message.success(data.msg)
+        .success(async ({msg, data : {user, token}}) => {
+          message.success(msg)
+          setToken(token)
+
+          await store.dispatch('getCharacterInfo');
+
+          store.commit('setUserInfo', user)
+          store.commit('setUserCharacter',getCharacterInfoById(user.character))
+
+          router.replace('/books')
+        //  replace跳到下一页不能回退，repush可以
         })
 
       // const {data} = await auth.login(loginForm.account, loginForm.password)

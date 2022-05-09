@@ -71,7 +71,39 @@
               </template>
             </a-input>
           </div>
-
+          <div class="item">
+            <a-input size="large"
+                     placeholder="姓名"
+                     v-model:value="regForm.name">
+              <template
+                v-slot:prefix
+              >
+                <UserOutlined />
+              </template>
+            </a-input>
+          </div>
+          <div class="item">
+            <a-input size="large"
+                     placeholder="地址"
+                     v-model:value="regForm.address">
+              <template
+                v-slot:prefix
+              >
+                <UserOutlined />
+              </template>
+            </a-input>
+          </div>
+          <div class="item">
+            <a-input size="large"
+                     placeholder="单位"
+                     v-model:value="regForm.company">
+              <template
+                v-slot:prefix
+              >
+                <UserOutlined />
+              </template>
+            </a-input>
+          </div>
           <div class="item">
             <a-input
               size="large"

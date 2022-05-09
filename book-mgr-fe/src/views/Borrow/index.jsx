@@ -1,14 +1,12 @@
 import {defineComponent ,ref, onMounted } from 'vue'
-import AddOne from './AddOne/index.vue'
+
 import {book} from '@/service'
 import {result, formatTimeStamp} from "@/helpers/utils";
 import {message, Modal, Input} from "ant-design-vue";
 
 
 export default defineComponent({
-  components:{
-    AddOne,
-  },
+
   setup(){
     const columns = [
       {
@@ -41,12 +39,12 @@ export default defineComponent({
         title: '分类',
         dataIndex: 'classify',
       },
-      {
-        title: '操作',
-        slots:{
-        customRender: 'actions'
-    }
-      }
+    //   {
+    //     title: '操作',
+    //     slots:{
+    //     customRender: 'actions'
+    // }
+    //   }
     ];
 
     const show = ref(false)

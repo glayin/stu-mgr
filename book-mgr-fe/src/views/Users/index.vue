@@ -5,37 +5,50 @@
 
       <a-divider></a-divider>
 
-      <a-button>添加用户</a-button>
+      <a-button @click="showAddModal = true">添加用户</a-button>
 
       <a-divider></a-divider>
 
       <div>
         <a-table
           bordered
-          :pagaination="false"
           :columns="columns"
           :data-source="list"
+          :pagination="false"
         >
 
           <template #createdAt = "{record}">
             {{formatTimeStamp(record.meta.createdAt)}}
           </template>
 
+          <template #character = "{record}">
+            {{ getCharacterInfoById(record.character).title}}
+          </template>
+
+
           <template #actions = "{record}">
             <a href="javascript:;">重置密码</a>
             &nbsp;
-            <a href="javascripy:;">删除</a>
+            <a href="javascript:;" @click="remove(record)">删除</a>
           </template>
 
         </a-table>
       </div>
 
       <flex-end style = "margin-top: 24px">
-        <a-pagination>
+        <a-pagination
+          v-model:current= "curPage"
+          :total="total"
+          :page-size="10"
+          @change="setPage"
+        />
 
-        </a-pagination>
       </flex-end>
     </a-card>
+    <add-one
+      v-model:show="showAddModal"
+      @getList="getUser"
+    />
   </div>
 </template>
 
