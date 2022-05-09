@@ -1,6 +1,7 @@
 require('./Schemas/User')
 require('./Schemas/InviteCode')
 require('./Schemas/Book')
+require('./Schemas/Character')
 const mongoose = require('mongoose')
 
 //哪个数据库

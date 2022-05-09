@@ -3,12 +3,15 @@ const koaBody = require('koa-body')
 const {connect} = require('./db')
 const registerRoutes = require('./routers')
 const cors = require('@koa/cors')
-
+const {middleware : koaJwtMiddleware, checkUser, catchTokenError} = require('./helpers/token')
 const app = new Koa()
 connect().then(() => {
     app.use(cors())
     app.use(koaBody())
     //koaBody处理请求体
+    app.use(catchTokenError)
+    koaJwtMiddleware(app)
+    app.use(checkUser);
     registerRoutes(app)
 
 
