@@ -1,0 +1,2 @@
+# stu-mgr
+management system
