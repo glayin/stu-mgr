@@ -14,7 +14,7 @@ export const getCharacterInfoById = (id) => {
   }
 
   return {
-    title:'未知角色'
+    title:'其他角色'
   }
 
   // return one || {

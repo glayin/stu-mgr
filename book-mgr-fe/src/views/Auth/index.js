@@ -16,8 +16,9 @@ export default defineComponent({
   },
   setup(){
 
-    const router = useRouter()
 
+    const router = useRouter()
+    const {characterInfo} = store.state
     const regForm = reactive({
       //注册表单数据
       account : '',
@@ -25,8 +26,10 @@ export default defineComponent({
       inviteCode: '',
       name:'',
       address:'',
-      company:''
+      company:'',
+      character: characterInfo[1]._id
     });
+
 
     const register = async () => {
       // 注册逻辑
@@ -47,6 +50,7 @@ export default defineComponent({
         regForm.account,
         regForm.password,
         regForm.inviteCode,
+        regForm.character
         )
 
       result(res)

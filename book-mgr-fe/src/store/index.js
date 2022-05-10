@@ -45,12 +45,12 @@ export default createStore({
       result(res)
         .success(
           ({data}) => {
-            console.log(data)
+            // console.log(data)
             store.commit('setUserInfo',data)
 
             store.commit('setUserCharacter', getCharacterInfoById(data.character))
 
-            console.log(store)
+            // console.log(store)
           })
 
     }
