@@ -119,14 +119,14 @@ export default defineComponent({
     }
 
     const updateCount = (type , record) => {
-      let word = "增加"
+      let word = "还"
 
       if(type === 'OUT_COUNT'){
-        word = "减少"
+        word = "借"
       }
 
       Modal.confirm({
-        title:`要${word}多少库存`,
+        title:`要${word}多少本书`,
         content: (
           <div>
             <Input class = "__book_input_count"/>
