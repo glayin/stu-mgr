@@ -15,7 +15,7 @@
 
           <a v-if="isSearch" href="javascript:;" @click="backAll">返回</a>
         </div>
-           <a-button @click="show=true">添加一条</a-button>
+
       </space-between>
       <a-table :columns="columns"
                :data-source="list"

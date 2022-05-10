@@ -27,7 +27,7 @@ export default defineComponent({
       name:'',
       address:'',
       company:'',
-      character: characterInfo[1]._id
+      character: '6272197b5b07f1727207abc7'
     });
 
 
