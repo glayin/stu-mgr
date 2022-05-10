@@ -22,7 +22,7 @@ const mongoose = require('mongoose')
 const  connect = () => {
     return new Promise((resolve) => {
         //连接数据库
-        mongoose.connect('mongodb://127.0.0.1:27017/book-mgr')
+        mongoose.connect('mongodb://1.117.67.66:27017/book-mgr')
         //数据库打开时做一些事情
         mongoose.connection.on('open', () => {
             console.log('连接数据库成功')

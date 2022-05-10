@@ -15,7 +15,8 @@ router.post('/register', async (ctx) => {
 
     const {account,
            password,
-           inviteCode} = getBody(ctx)
+           inviteCode,
+           character} = getBody(ctx)
     //做表单校验
     //邀请码删掉了
     if(account === '' ||password === '' ){
@@ -52,11 +53,13 @@ router.post('/register', async (ctx) => {
         return
     }
     //创建一个用户
+    var now = new Date();
 
     const user = new User({
         account,
         password,
-        readerNo:uuidv4()
+        readerNo: Math.ceil(now.getTime() / 1000 - 1652025600),
+        character,
     })
     //把创建的用户同步到mongodb
     const res = await user.save()

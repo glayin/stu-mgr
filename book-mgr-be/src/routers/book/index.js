@@ -103,7 +103,7 @@ router.get('/list', async (ctx) => {
     })
 })
 
-    router.post('/update/count' , async (ctx) => {
+router.post('/update/count' , async (ctx) => {
         const {
             id,
             type,
