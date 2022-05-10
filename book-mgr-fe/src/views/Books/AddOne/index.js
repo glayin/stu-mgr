@@ -25,17 +25,23 @@ export default defineComponent({
           .success((data)=>{
             Object.assign(addForm, defaultFormData)
             message.success(data.msg)
+            context.emit('getList');
+            close()
+
           })
+
       };
       const close = () => {
         context.emit('update:show', false)
+
       //  emit触发自定义事件
       }
       return{
         addForm,
         submit,
         props,
-        close
+        close,
+
       }
     },
 

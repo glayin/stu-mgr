@@ -1,4 +1,4 @@
-import {defineComponent ,ref, onMounted } from 'vue'
+import {defineComponent ,ref, onMounted,onUpdated } from 'vue'
 import AddOne from './AddOne/index.vue'
 import {book} from '@/service'
 import {result, formatTimeStamp} from "@/helpers/utils";
@@ -9,6 +9,7 @@ export default defineComponent({
   components:{
     AddOne,
   },
+
   setup(){
     const columns = [
       {
@@ -79,6 +80,9 @@ export default defineComponent({
         getList()
     })
 
+    onUpdated(() => {
+      getList()
+    })
     const setPage = (page) => {
       console.log(page)
       // console.log(page,pagesize)
@@ -181,6 +185,8 @@ export default defineComponent({
       isSearch,
       remove,
       updateCount,
+      getList,
     }
   }
 })
+

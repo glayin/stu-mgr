@@ -79,7 +79,7 @@ export default defineComponent({
 
       result(res)
         .success(async ({msg, data : {user, token}}) => {
-          message.success(msg)
+         message.success(msg)
           setToken(token)
 
           await store.dispatch('getCharacterInfo');
@@ -88,7 +88,7 @@ export default defineComponent({
           store.commit('setUserCharacter',getCharacterInfoById(user.character))
           if(store.state.userCharacter.title ==="管理员" ){
             router.replace('/books')
-          }else{
+          }else {
             router.replace('/borrow')
           }
 
