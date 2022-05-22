@@ -15,11 +15,13 @@ export default defineComponent({
 
         menu.splice(0,2)
         menu.push({
-
           title:'书籍借阅',
             url:'/borrow',
+        } )
 
-
+        menu.push({
+          title:'借阅记录',
+          url:'/borrowRecords',
         })
       }
 

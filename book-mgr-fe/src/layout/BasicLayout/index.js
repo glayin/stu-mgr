@@ -9,8 +9,6 @@ export default defineComponent({
   setup() {
 
     const logout = () => {
-
-
       window.location.href = '/';
     };
 

@@ -2,12 +2,10 @@
   <div style="width: 100%; ">
     <a-menu
       id="dddddd"
-
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
       mode="inline"
       v-for="(item) in menu" :key="item.url"
-
     >
       <a-sub-menu
           v-if="item.children"

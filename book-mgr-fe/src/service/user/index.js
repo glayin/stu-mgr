@@ -15,6 +15,7 @@ export const remove = (id) => {
   return axios.delete(`http://localhost:3000/user/${id}`)
 }
 
+
 export const add = (account, password,character) => {
   return axios.post('http://localhost:3000/user/add',{
     account,
@@ -22,6 +23,7 @@ export const add = (account, password,character) => {
     character
   })
 }
+
 
 export const info = () => {
   return axios.get('http://localhost:3000/user/info')

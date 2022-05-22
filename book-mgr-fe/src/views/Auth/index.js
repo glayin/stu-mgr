@@ -19,6 +19,8 @@ export default defineComponent({
 
     const router = useRouter()
     const {characterInfo} = store.state
+
+
     const regForm = reactive({
       //注册表单数据
       account : '',
@@ -32,6 +34,7 @@ export default defineComponent({
 
 
     const register = async () => {
+
       // 注册逻辑
       if(regForm.account === ''){
         message.info('请输入账户')
@@ -87,7 +90,7 @@ export default defineComponent({
           setToken(token)
 
           await store.dispatch('getCharacterInfo');
-
+          console.log(store.state.userInfo.account )
           store.commit('setUserInfo', user)
           store.commit('setUserCharacter',getCharacterInfoById(user.character))
           if(store.state.userCharacter.title ==="管理员" ){

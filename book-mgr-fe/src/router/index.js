@@ -25,9 +25,14 @@ const routes = [
         component: () => import(/* webpackChunkName:"Users" */ '../views/Users/index.vue'),
       },
       {
-        path: 'Borrow',
+        path: 'borrow',
         name: 'Borrow',
         component: () => import(/* webpackChunkName:"Borrows" */ '../views/Borrow/index.vue'),
+      },
+      {
+        path: 'borrowRecords',
+        name: 'BorrowRecords',
+        component: () => import(/* webpackChunkName:"Borrows" */ '../views/BorrowRecords/index.vue'),
       }
     ]
   },
@@ -99,8 +104,6 @@ router.beforeEach( async (to, from, next)=>{
     // await store.dispatch('getCharacterInfo');
     reqArr.push(store.dispatch('getCharacterInfo'));
   }
-
-
 
     await Promise.all(reqArr);
 

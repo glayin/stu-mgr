@@ -1,9 +1,18 @@
-import {defineComponent ,ref, onMounted } from 'vue'
-
-import {book} from '@/service'
-import {result, formatTimeStamp} from "@/helpers/utils";
+import {defineComponent, ref, onMounted, reactive} from 'vue'
+import store from '@/store'
+import {book,borrow,borrowRecords } from '@/service'
+import {result, formatTimeStamp, clone} from "@/helpers/utils";
+import {getMyTime} from "@/helpers/getTIme";
 import {message, Modal, Input} from "ant-design-vue";
-
+const defaultFormData = {
+  user:'',
+  name: '',
+  price:0,
+  author:'',
+  publishDate:0,
+  classify:'',
+  count:'',
+}
 
 export default defineComponent({
 
@@ -48,7 +57,7 @@ export default defineComponent({
     ];
 
     const show = ref(false)
-
+    const borrowForm = reactive(clone(defaultFormData));
     const curPage = ref(1)
     const keyword = ref('')
     const list = ref([])
@@ -118,23 +127,59 @@ export default defineComponent({
       // getList()
     }
 
-    const updateCount = (type , record) => {
-      let word = "还"
+    const updateCount =async (type , record) => {
+      const user = store.state.userInfo.account
+      const resOverdue =await borrowRecords.getRecords({
+        user: user
+      })
+      const{data} = resOverdue.data
+      console.log(data)
+      if(data){
+        let is_overdue = false
+        data.forEach((item) => {
+          if(item.is_overdue === true){
+            is_overdue = true
+          }
+        })
 
-      if(type === 'OUT_COUNT'){
-        word = "借"
+        if(is_overdue) {
+          message.error('您的借阅已超期，请联系管理员')
+          return
+        }
       }
+
+
+
+      let word = "还"
+      let is_return = true
+      if(type === 'OUT_COUNT'){
+        word = "借",
+        is_return = false
+
+      }
+
+
 
       Modal.confirm({
         title:`要${word}多少本书`,
         content: (
           <div>
+
             <Input class = "__book_input_count"/>
+            <div>书名:{record.name}</div>
+            <div>用户: {store.state.userInfo.account}</div>
+            <div>日期:{getMyTime()}</div>
+            <div>分类:{record.classify}</div>
           </div>
+
         ),
         onOk : async () => {
           const el = document.querySelector('.__book_input_count')
           let num = el.value
+          if(num > 5){message.error('最多借5本')
+            return
+          }
+          console.log(record.name)
           const res = await book.updateCount({
             id : record._id,
             num,
@@ -161,6 +206,18 @@ export default defineComponent({
                 message.success(`成功${word} ${Math.abs(num)}本书`)
               }
           })
+
+          const borrowRes = await borrow.addBorrow(
+            {
+              user: store.state.userInfo.account,
+              book: record.name,
+              date: getMyTime(),
+              number:num,
+              is_return: is_return
+            }
+          )
+
+
           getList()
         }
       })
