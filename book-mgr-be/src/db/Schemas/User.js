@@ -5,6 +5,9 @@ const UserSchema = new mongoose.Schema({
     password:String,
     readerNo:String,
     character:String,
+    name:String,
+    address:String,
+    company:String,
     meta:getMate(),
 })
 

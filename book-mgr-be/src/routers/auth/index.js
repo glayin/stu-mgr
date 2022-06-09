@@ -16,7 +16,10 @@ router.post('/register', async (ctx) => {
     const {account,
            password,
            inviteCode,
-           character} = getBody(ctx)
+           character,
+            name,
+            address,
+            company} = getBody(ctx)
     //做表单校验
     //邀请码删掉了
     if(account === '' ||password === '' ){
@@ -60,6 +63,9 @@ router.post('/register', async (ctx) => {
         password,
         readerNo: Math.ceil(now.getTime() / 1000 - 1652025600),
         character,
+        name,
+        address,
+        company
     })
     //把创建的用户同步到mongodb
     const res = await user.save()

@@ -34,8 +34,6 @@ router.post('/add', async (ctx) => {
 
     const res = await book.save()
 
-
-
     ctx.body = {
         data:res,
         code:1,
@@ -49,7 +47,6 @@ router.get('/list', async (ctx) => {
     const {
         page = 1,
         keyword = '',
-
     } = ctx.query
 
     let {

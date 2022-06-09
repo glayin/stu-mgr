@@ -11,14 +11,20 @@ const router = new Router({
 router.get('/list', async (ctx) => {
     let {
         page,
-        size
+        size,
+        keyword = '',
     } = ctx.query
 
     page = Number(page)
     size = Number(size)
 
+    const query = {}
+    if(keyword){
+        query.name = keyword
+    }
+
     const list = await User
-        .find()
+        .find(query)
         .sort({
             _id: -1,
         })

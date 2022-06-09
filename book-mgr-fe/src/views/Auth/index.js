@@ -53,7 +53,10 @@ export default defineComponent({
         regForm.account,
         regForm.password,
         regForm.inviteCode,
-        regForm.character
+        regForm.character,
+        regForm.address,
+        regForm.name,
+        regForm.company
         )
 
       result(res)

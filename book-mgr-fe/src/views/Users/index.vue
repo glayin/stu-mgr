@@ -5,7 +5,20 @@
 
       <a-divider></a-divider>
 
+
+      <space-between>
+      <div class="search">
+        <a-input-search
+          placeholder="请输入姓名查询"
+          enter-button
+          v-model:value="keyword"
+          @search = "onSearch"
+        />
+
+        <a v-if="isSearch" href="javascript:;" @click="backAll">返回</a>
+      </div>
       <a-button @click="showAddModal = true">添加用户</a-button>
+      </space-between>
 
       <a-divider></a-divider>
 

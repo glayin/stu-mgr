@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-export const register = (account, password, inviteCode, character) => {
+export const register = (account, password, inviteCode, character,address,name,company) => {
   return  axios.post("http://localhost:3000/auth/register", {
     account,
     password,
     inviteCode,
-    character
+    character,
+    address,
+    name,
+    company
   })
 }
 

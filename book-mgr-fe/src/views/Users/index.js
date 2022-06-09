@@ -23,6 +23,18 @@ const columns = [
     }
   },
   {
+    title: '姓名',
+    dataIndex: 'name',
+  },
+  {
+    title: '地址',
+    dataIndex: 'address',
+  },
+  {
+    title: '单位',
+    dataIndex: 'company'
+  },
+  {
     title:'操作',
     slots: {
       customRender: 'actions'
@@ -38,10 +50,15 @@ export default defineComponent({
     const curPage = ref(1)
     const total = ref(0)
     const showAddModal = ref(false)
-
+    const isSearch = ref(false)
+    const keyword = ref('')
     const getUser = async () => {
 
-      const res = await user.list(curPage.value,10)
+      const res = await user.list
+      (curPage.value,
+        10,
+        keyword.value,
+        )
 
       result(res)
         .success(({data : {list :refList, total : resTotal}}) => {
@@ -53,7 +70,20 @@ export default defineComponent({
     onMounted(() => {
 
       getUser()
+
+      console.log(list)
     })
+
+    const onSearch = () => {
+      getUser();
+      isSearch.value = keyword.value;
+    }
+
+    const backAll = () => {
+      keyword.value = ''
+      getUser()
+      isSearch.value = false
+    }
 
     const remove = async ({_id}) => {
       const res = await user.remove(_id)
@@ -79,6 +109,10 @@ export default defineComponent({
       remove,
       formatTimeStamp,
       showAddModal,
+      keyword,
+      isSearch,
+      onSearch,
+      backAll,
       getUser,
       setPage,
       getCharacterInfoById
