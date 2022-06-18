@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-
-	log "github.com/sirupsen/logrus"
 )
 
 type Resp struct {
@@ -19,7 +17,7 @@ func ListUserBorrow(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	user := r.FormValue("user")
 	data, err := DBListUser(user)
-	log.Debugf("data %v", data)
+	logger.Debugf("data %v", data)
 	if err != nil {
 		ReturnError(err, w, r)
 	}
@@ -29,7 +27,7 @@ func ListUserBorrow(w http.ResponseWriter, r *http.Request) {
 // AddUserBorrow 添加一条借阅记录
 func AddUserBorrow(w http.ResponseWriter, r *http.Request) {
 	bytes, err := ioutil.ReadAll(r.Body)
-	log.Debugf("ub is:", string(bytes))
+	logger.Debugf("ub is:", string(bytes))
 	if err != nil {
 		ReturnError(err, w, r)
 	}
@@ -39,7 +37,7 @@ func AddUserBorrow(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ReturnError(err, w, r)
 	}
-	log.Debugf("ub is:", string(bytes))
+	logger.Debugf("ub is:", string(bytes))
 	err = DBAddUserBorrow(ub)
 	if err != nil {
 		ReturnError(err, w, r)

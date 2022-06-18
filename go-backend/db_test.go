@@ -10,7 +10,7 @@ import (
 )
 
 func TestDB_ListUser(t *testing.T) {
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://1.117.67.66:27017"))
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://127.0.0.1:27017"))
 	if err != nil {
 		log.Panic(err)
 	}

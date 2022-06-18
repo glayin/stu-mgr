@@ -2,17 +2,20 @@ package main
 
 import (
 	"context"
+	"github.com/herrhu97/simple-go-framework/log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
-
-	log "github.com/sirupsen/logrus"
 )
 
+var logger *log.Logger
+
 func main() {
-	log.SetOutput(os.Stdout)
-	log.SetLevel(log.DebugLevel)
+
+	go periodRefreshDB()
+
+	logger = log.New()
 
 	http.HandleFunc("/stu-mgr/list_user_borrow", cors(ListUserBorrow))
 	http.HandleFunc("/stu-mgr/add_user_borrow", cors(AddUserBorrow))
@@ -20,11 +23,10 @@ func main() {
 	server := http.Server{Addr: ":80"}
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
-			log.Println("server start failed")
+			logger.Debug("server start failed")
 		}
 	}()
-	log.Debug("Server started")
-
+	logger.Debug("Server started")
 	readyToStop(&server)
 }
 
@@ -32,11 +34,22 @@ func readyToStop(server *http.Server) {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	s := <-c
-	log.Printf("receive signal: %s\n", s)
+	logger.Debug("receive signal: %s\n", s)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
-		log.Println("server shutdown failed")
+		logger.Debug("server shutdown failed")
 	}
-	log.Println("server exit")
+	logger.Debug("server exit")
+}
+
+func periodRefreshDB() {
+	for {
+		log.Debug("Begin to Refresh")
+		err := RefreshOverDue()
+		if err != nil {
+			log.Error(err)
+		}
+		time.Sleep(time.Minute * 5)
+	}
 }
